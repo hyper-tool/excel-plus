@@ -1,23 +1,43 @@
-/vendor/
+# Originate: https://gist.github.com/benhuang1024/.gitignore
+# Author: ben<benhuang1024@gmail.com>
+
+# other
+vendor/
+.vagrant
+
+# IDE
+.idea/
+.vscode
+nbproject/private/
+_ide_helper.php
+_ide_helper_models.php
+.phpstorm.meta.php
+
+# JavaScript
 node_modules/
 npm-debug.log
 yarn-error.log
 
-# Laravel 4 specific
-bootstrap/compiled.php
-app/storage/
-
-# Laravel 5 & Lumen specific
+# Laravel  & Lumen specific
 public/storage
 public/hot
-
-# Laravel 5 & Lumen specific with changed public path
-public_html/storage
-public_html/hot
-
 storage/*.key
+.env.*.php
+.env.php
 .env
 Homestead.yaml
 Homestead.json
-/.vagrant
+Envoy.blade.php
+
+
+# Rocketeer PHP task runner and deployment package。
+.rocketeer/
+
+# Laravel Box
+samples/
+
+# PHPUnit
 .phpunit.result.cache
+
+# PHP CS
+.php_cs.cache
