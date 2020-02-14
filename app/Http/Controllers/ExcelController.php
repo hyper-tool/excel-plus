@@ -53,19 +53,14 @@ class ExcelController extends Controller
 
     public function mergeFiles()
     {
-        $excels_path = resource_path('excels/merges');
-        $excel_files = scandir($excels_path);
-        foreach ($excel_files as $excel_file) {
-            $excel_file_path = $excels_path . '/' . $excel_file;
-            if (is_file($excel_file_path)) {
-                $array = (new ExcelImports)->toArray($excel_file_path)[0];
-                foreach ($array as $key => $value) {
-                    $merge_array[] = $value;
-                }
-            }
-        }
+        $merge_array = $this->service->getMergeArray();
         $export = new ExcelExport($merge_array);
         return Excel::download($export, 'ExcelExport.xlsx');
+    }
+
+    public function readColor()
+    {
+
     }
 
     public function export()

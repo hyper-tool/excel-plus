@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Imports\ExcelImports;
 use App\Presenters\ExcelPresenter;
 use App\Repositories\ExcelRepository;
 
@@ -31,66 +32,20 @@ class ExcelService extends Service
         $this->repository = new ExcelRepository();
     }
 
-    /**
-     * @param array $data
-     *
-     * @return mixed
-     */
-    public function getList($data = [])
+    public function getMergeArray($merge_array = [])
     {
-        if (isset($data['per_page'])) {
-            $this->repository->per_page = $data['per_page'];
+        $excels_path = resource_path('excels/merges');
+        $excel_files = scandir($excels_path);
+        foreach ($excel_files as $excel_file) {
+            $excel_file_path = $excels_path . '/' . $excel_file;
+            if (is_file($excel_file_path)) {
+                $array = (new ExcelImports)->toArray($excel_file_path)[0];
+                foreach ($array as $key => $value) {
+                    $merge_array[] = $value;
+                }
+            }
         }
-        if (! isset($data['search']) || '{}' == $data['search']) {
-            $data['search'] = [];
-        }
-        return $this->repository->getList($data['search']);
-    }
-
-    /**
-     * @param $data
-     *
-     * @return int
-     */
-    public function store($data)
-    {
-        return $this->repository
-            ->create($data);
-    }
-
-    /**
-     *
-     */
-    public function create()
-    {
-    }
-
-    /**
-     * @param $id
-     *
-     * @return \App\Models\Excel|\App\Models\Excel[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|null
-     */
-    public function getIdInfo($id)
-    {
-        return $this->repository->find($id);
-    }
-
-    /**
-     * @param $data
-     *
-     * @return int
-     */
-    public function update($data, $id)
-    {
-        return $this->repository->update($data, $id);
-    }
-
-    /**
-     * @param $id
-     */
-    public function destroy($id)
-    {
-        $this->repository->destroy($id);
+        return $merge_array;
     }
 
 
