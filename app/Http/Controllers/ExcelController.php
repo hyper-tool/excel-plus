@@ -53,7 +53,7 @@ class ExcelController extends Controller
 
     public function mergeFiles()
     {
-        $excels_path = resource_path('excels');
+        $excels_path = resource_path('excels/merges');
         $excel_files = scandir($excels_path);
         foreach ($excel_files as $excel_file) {
             $excel_file_path = $excels_path . '/' . $excel_file;
@@ -65,7 +65,7 @@ class ExcelController extends Controller
             }
         }
         $export = new ExcelExport($merge_array);
-       return Excel::download($export, 'ExcelExport.xlsx');
+        return Excel::download($export, 'ExcelExport.xlsx');
     }
 
     public function export()
